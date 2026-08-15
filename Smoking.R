@@ -9,8 +9,15 @@ library(nhanesA)
 #View(nhanesTableVars("EXAM", "BMX_D")) #show table variables
 length(nhanesSearchTableNames('BMX')) #list of tables that match pattern
 
-bmx_d <- nhanes("BMX_D") #get a table // D = 	2005-2006
-bmx_e <- nhanes("BMX_E")
+#get tables
+bmx_d <- nhanes("BMX_D")  # D = 2005-2006
+bmx_e <- nhanes("BMX_E")  # E = 2007-2008
 
-bmi <- bmx_d[,c(1,11)]
+
+
+
+bmi_d <- bmx_d[,c(1,11)]
+bmi_e <- bmx_e[,c(1,11)]
+
+
 
