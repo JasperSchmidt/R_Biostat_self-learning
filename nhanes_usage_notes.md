@@ -1,3 +1,8 @@
+Use GitHub:
+#library(usethis)
+#use_github()
+
+
 https://cran.r-project.org/web/packages/nhanesA/vignettes/Introducing_nhanesA.html 
 
 two year surveys that start in uneven years: 2005 = 2006 survey
@@ -13,3 +18,6 @@ F	2009-2010	L	2021-2023
 
 Linked Mortality File:
 https://ftp.cdc.gov/pub/Health_Statistics/NCHS/datalinkage/linked_mortality/ 
+
+
+
