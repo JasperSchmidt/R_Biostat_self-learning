@@ -30,36 +30,22 @@ surveys = c("DEMO", "DIET", "EXAM", "LAB", "Q")
 
 ##### Smoking #####
 
-View(nhanesTables("Q", 2005))
-View(nhanesTableVars("Q", "SMQ_D"))
-View(nhanes("SMQ_D"))
-
 # check for years with available smoking data (A and K missing)
 smoking_years <- nhanesSearchTableNames('SMQ_') 
 
-#check if questions are identical 
-smq_d_vars <- nhanesTableVars("Q", "SMQ_D")$Variable.Name # Question Code in years d
-smq_e_vars <- nhanesTableVars("Q", "SMQ_E")$Variable.Name # Question Code in years e
 
-#filter out only the questions that are asked in both years
-common_vars <- nhanesTableVars("Q", "SMQ_D") |> 
-  filter(Variable.Name %in% intersect(smq_d_vars, smq_e_vars)) 
+#View(nhanesTableVars("Q", "SMQ_D")) #compare codes to questions
+#View(nhanesTableVars("Q", "SMQ_E"))
 
-# select question Code for questions of interest
-columns <- common_vars[c(1,4,5),1] # SEQN, age last smoked, amount smoked
 
-smq_d <- select(nhanes("SMQ_D"), all_of(columns)) # truncate data to questions of interest
-smq_e <- select(nhanes("SMQ_E"), all_of(columns))
+smq_d <- nhanes("SMQ_D") |> 
+  select(all_of(c("SEQN", "SMQ040", "SMD650"))) |> 
+  filter(SMD650 < 500) # filter out extreme data (artefacts?)
 
-smq_d <- smq_d |> 
-  filter(!is.na(SMD055)) |> #filter out NA data (non smoker answers)
-  filter(SMD055 < 500) |>  #filter out extreme data (probably artefacts)
-  filter(SMD057 < 500)
+smq_e <- nhanes("SMQ_E") |> 
+  select(all_of(c("SEQN", "SMQ040", "SMD650"))) |> 
+  filter(SMD650 < 500) # filter out extreme data (artefacts?)
 
-smq_e <- smq_e |> 
-  filter(!is.na(SMD055)) |> 
-  filter(SMD055 < 500) |>  #filter out extreme data (probably artefacts)
-  filter(SMD057 < 500)
 
 # average age of last smoked in cohort d and e
 mean(smq_d$SMD055)
@@ -128,6 +114,23 @@ data_cleaned_e <- smq_e |>
   inner_join(bpx_e, by = "SEQN")
 
 #hist(data_cleaned_d$SMD055) #truncated normal distr? 
+
+
+#### analysis ####
+
+# test smoker and non smoker distolic blood pressure in d cohort
+
+
+smoker_d <- filter(data_cleaned_d, )
+
+
+
+
+
+
+
+
+
 
 
 
