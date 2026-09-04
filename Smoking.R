@@ -54,10 +54,14 @@ smq_d <- select(nhanes("SMQ_D"), all_of(columns)) # truncate data to questions o
 smq_e <- select(nhanes("SMQ_E"), all_of(columns))
 
 smq_d <- smq_d |> 
-  filter(!is.na(SMD055)) #filter out NA data (non smoker answers)
+  filter(!is.na(SMD055)) |> #filter out NA data (non smoker answers)
+  filter(SMD055 < 500) |>  #filter out extreme data (probably artefacts)
+  filter(SMD057 < 500)
 
 smq_e <- smq_e |> 
-  filter(!is.na(SMD055))
+  filter(!is.na(SMD055)) |> 
+  filter(SMD055 < 500) |>  #filter out extreme data (probably artefacts)
+  filter(SMD057 < 500)
 
 # average age of last smoked in cohort d and e
 mean(smq_d$SMD055)
@@ -113,4 +117,21 @@ bpx_e <- bpx_e |>
 
 #mean(bpx_e$BPXDI1)
 #mean(bpx_e$BPXSY1)
+
+
+####### merge data
+
+data_cleaned_d <- smq_d |> 
+  inner_join(demo_d, by = "SEQN") |> 
+  inner_join(bpx_d, by = "SEQN")
+
+data_cleaned_e <- smq_e |> 
+  inner_join(demo_e, by = "SEQN") |> 
+  inner_join(bpx_e, by = "SEQN")
+
+
+#hist(data_cleaned_d$SMD055) #truncated normal distr? 
+
+
+
 
