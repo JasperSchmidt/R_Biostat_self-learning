@@ -68,8 +68,8 @@ mean(smq_d$SMD057)
 mean(smq_e$SMD057)
 
 ####### DEMO
-View(nhanesTables("DEMO", 2005))
-View(nhanesTableVars("DEMO", "DEMO_D"))
+#View(nhanesTables("DEMO", 2005))
+#View(nhanesTableVars("DEMO", "DEMO_D"))
 demo_d <- nhanes("DEMO_D") #get demographics for d & e cohort
 demo_e <- nhanes("DEMO_E")
 
@@ -85,20 +85,32 @@ demo_e <- demo_e |>
   select(all_of(c("SEQN", "RIDAGEEX"))) |> 
   filter(!is.na(RIDAGEEX))
 
-mean(demo_d$RIDAGEEX)/12 # average age
-mean(demo_e$RIDAGEEX)/12
-
+#mean(demo_d$RIDAGEEX)/12 # average age
+#mean(demo_e$RIDAGEEX)/12
 
 
 ######EXAM
-View(nhanesTables("EXAM", 2005))
-View(nhanesTableVars("EXAM", "BPX_D"))
+#View(nhanesTables("EXAM", 2005))
+#View(nhanesTableVars("EXAM", "BPX_D"))
 bpx_d <- nhanes("BPX_D") #get bp data for d,e cohort
 bpx_e <- nhanes("BPX_E")
 
 
+#bp_columns_di = c("BPXDI1", "BPXDI2", "BPXDI3", "BPXDI4")
+#bp_columns_sy = c("BPXSY1", "BPXSY2", "BPXSY3", "BPXSY4")
 
+# use only first measurement (for now)
 
+bpx_d <- bpx_d |> 
+  select(all_of(c("SEQN", "BPXDI1", "BPXSY1"))) |>  #select bp data 
+  filter(!is.na(BPXDI1)) |> 
+  filter(!is.na(BPXSY1))
 
+bpx_e <- bpx_e |> 
+  select(all_of(c("SEQN", "BPXDI1", "BPXSY1"))) |> #select bp data 
+  filter(!is.na(BPXDI1)) |> 
+  filter(!is.na(BPXSY1))
 
+#mean(bpx_e$BPXDI1)
+#mean(bpx_e$BPXSY1)
 
