@@ -1,10 +1,6 @@
 library(nhanesA)
 library(dplyr)
 
-#https://cran.r-project.org/web/packages/nhanesA/vignettes/Introducing_nhanesA.html 
-
-#two year surveys that start in uneven years: 2005 = 2006 survey
-
 
 View(nhanesTables("EXAM", 2005)) # available variables in survey group
 View(nhanesTableVars("EXAM", "BMX_D")) #show table variables
@@ -73,7 +69,7 @@ mean(smq_e$SMD055)
 mean(smq_d$SMD057)
 mean(smq_e$SMD057)
 
-####### DEMO
+##### DEMO ##### 
 #View(nhanesTables("DEMO", 2005))
 #View(nhanesTableVars("DEMO", "DEMO_D"))
 demo_d <- nhanes("DEMO_D") #get demographics for d & e cohort
@@ -95,7 +91,7 @@ demo_e <- demo_e |>
 #mean(demo_e$RIDAGEEX)/12
 
 
-######EXAM
+##### EXAM #####
 #View(nhanesTables("EXAM", 2005))
 #View(nhanesTableVars("EXAM", "BPX_D"))
 bpx_d <- nhanes("BPX_D") #get bp data for d,e cohort
@@ -121,7 +117,7 @@ bpx_e <- bpx_e |>
 #mean(bpx_e$BPXSY1)
 
 
-####### merge data
+#### merge data ####
 
 data_cleaned_d <- smq_d |> 
   inner_join(demo_d, by = "SEQN") |> 
@@ -131,8 +127,10 @@ data_cleaned_e <- smq_e |>
   inner_join(demo_e, by = "SEQN") |> 
   inner_join(bpx_e, by = "SEQN")
 
-
 #hist(data_cleaned_d$SMD055) #truncated normal distr? 
+
+
+
 
 
 
