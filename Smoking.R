@@ -34,18 +34,16 @@ surveys = c("DEMO", "DIET", "EXAM", "LAB", "Q")
 smoking_years <- nhanesSearchTableNames('SMQ_') 
 
 
-#View(nhanesTableVars("Q", "SMQ_D")) #compare codes to questions
-#View(nhanesTableVars("Q", "SMQ_E"))
+View(nhanesTableVars("Q", "SMQ_D")) #compare codes to questions
+View(nhanesTableVars("Q", "SMQ_E"))
 
 
 smq_d <- nhanes("SMQ_D") |> 
-  select(all_of(c("SEQN", "SMQ040", "SMD650"))) |> 
-  filter(SMD650 < 500) # filter out extreme data (artefacts?)
+  select(all_of(c("SEQN", "SMQ040", "SMD070"))) |> 
+  filter(SMD070 < 500 | is.na(SMD070)) # filter out extreme data (artefacts?), apparently "filter" discard NA - keep them here
 
 smq_e <- nhanes("SMQ_E") |> 
-  select(all_of(c("SEQN", "SMQ040", "SMD650"))) |> 
-  filter(SMD650 < 500) # filter out extreme data (artefacts?)
-
+  select(all_of(c("SEQN", "SMQ040"))) 
 
 # average age of last smoked in cohort d and e
 mean(smq_d$SMD055)
@@ -118,18 +116,28 @@ data_cleaned_e <- smq_e |>
 
 #### analysis ####
 
-# test smoker and non smoker distolic blood pressure in d cohort
+# test smoker and non smoker diastolic blood pressure in d cohort
 
 
-smoker_d <- filter(data_cleaned_d, )
+smoker_d <- filter(data_cleaned_d, SMQ040 == "Every day")
+non_smoker_d <- filter(data_cleaned_d, SMQ040 == "Not at all")
 
+mean(smoker_d$BPXSY1)
+mean(non_smoker_d$BPXSY1)
 
+# t-test
 
+t.test(smoker_d$BPXSY1, non_smoker_d$BPXSY1)
 
+# significant result that smoker have lower sys bp
 
+# ToDo: confounding factors: age, definition of non smokers (e.g. smoked previously), bmi, antihypertensiva
 
+# Maybe ToDo: ANCOVA?, Stratification?,  (linear?) regression?
 
+# Review: check for selection biases, check if model assumptions of t-test are satisfied (tests?)
 
+# other ideas: distribution fit?, truncated normals in some variables (how to deal with this)? 
 
 
 
