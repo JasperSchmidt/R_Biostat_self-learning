@@ -17,20 +17,22 @@ bmx_e <- nhanes("BMX_E")  # E = 2007-2008
 surveys = c("DEMO", "DIET", "EXAM", "LAB", "Q")
 
 
-#### Data Selection Process ########
+#### Data Selection Process ####
 # For each cohort (d, e)
 # 1. filter out metrics of interest: SEQN, bp, age, age last smoked, amount smoked
 # 2. filter out NAs
 # 3. merge lists (using SEQN) by intersecting strings (i.e. leaving out individuals with incomplete data) 
 # 
 #
-#################
+
+
+#### data import ####
 
 #LAB
 #View(nhanesTables("LAB", 2005))
 
 
-##### Smoking
+##### Smoking #####
 
 View(nhanesTables("Q", 2005))
 View(nhanesTableVars("Q", "SMQ_D"))
