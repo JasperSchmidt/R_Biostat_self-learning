@@ -77,11 +77,17 @@ demo_e <- nhanes("DEMO_E")
 #View(nhanesTableVars("DEMO", "DEMO_D"))
 #View(nhanesTableVars("DEMO", "DEMO_E"))
 
-demo_d |> select(all_of(c("SEQN", "RIDAGEEX")))
-demo_e |> select(all_of(c("SEQN", "RIDAGEEX")))
+demo_d <- demo_d |> 
+  select(all_of(c("SEQN", "RIDAGEEX"))) |> #select age data
+  filter(!is.na(RIDAGEEX)) #filter out na
 
-mean(demo_d$RIDAGEEX, na.rm = TRUE)/12 # average age
-mean(demo_e$RIDAGEEX, na.rm = TRUE)/12
+demo_e <- demo_e |> 
+  select(all_of(c("SEQN", "RIDAGEEX"))) |> 
+  filter(!is.na(RIDAGEEX))
+
+mean(demo_d$RIDAGEEX)/12 # average age
+mean(demo_e$RIDAGEEX)/12
+
 
 
 ######EXAM
