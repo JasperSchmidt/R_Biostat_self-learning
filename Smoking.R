@@ -13,19 +13,11 @@ bmx_e <- nhanes("BMX_E")  # E = 2007-2008
 surveys = c("DEMO", "DIET", "EXAM", "LAB", "Q")
 
 
-#### Data Selection Process ####
-# For each cohort (d, e)
-# 1. filter out metrics of interest: SEQN, bp, age, age last smoked, amount smoked
-# 2. filter out NAs
-# 3. merge lists (using SEQN) by intersecting strings (i.e. leaving out individuals with incomplete data) 
-# 
-#
-
 
 #### data import ####
 
 #LAB
-#View(nhanesTables("LAB", 2005))
+#View(nhanesTables("LAB", 2005)) #not needed at the moment
 
 
 ##### Smoking #####
@@ -59,7 +51,6 @@ mean(smq_e$SMD057)
 demo_d <- nhanes("DEMO_D") #get demographics for d & e cohort
 demo_e <- nhanes("DEMO_E")
 
-#select out SEQN and age (collumns: 38, 28)
 #View(nhanesTableVars("DEMO", "DEMO_D"))
 #View(nhanesTableVars("DEMO", "DEMO_E"))
 
@@ -76,16 +67,18 @@ demo_e <- demo_e |>
 
 
 ##### EXAM #####
+# get bp data
+
 #View(nhanesTables("EXAM", 2005))
 #View(nhanesTableVars("EXAM", "BPX_D"))
-bpx_d <- nhanes("BPX_D") #get bp data for d,e cohort
+bpx_d <- nhanes("BPX_D") 
 bpx_e <- nhanes("BPX_E")
 
 
 #bp_columns_di = c("BPXDI1", "BPXDI2", "BPXDI3", "BPXDI4")
 #bp_columns_sy = c("BPXSY1", "BPXSY2", "BPXSY3", "BPXSY4")
 
-# use only first measurement (for now)
+# use only first bp measurement for now
 
 bpx_d <- bpx_d |> 
   select(all_of(c("SEQN", "BPXDI1", "BPXSY1"))) |>  #select bp data 
