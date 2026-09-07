@@ -16,13 +16,14 @@ I use *Introduction to Randomized Controlled Clinical Trials*, by John M.S. Matt
 ##### Currently working on:
 - data cleaning 
 - simple data investigation and testing to formulate hypotheses
-- dealing with confounding variables (smokers appear to be healthier in uncontrolled model)
-
+- dealing with confounding variables (smokers appear to be healthier in some metrics in uncontrolled model)
+- applying sample size theory 
 
 
 \
 
 ##### Future ToDos:
+- detail out statistical analysis plan for survival model (Kaplan-Meier); use "linked mortaliy dataset"
 - ANCOVA
 - Stratification 
 - dealing non-normal distribution\
