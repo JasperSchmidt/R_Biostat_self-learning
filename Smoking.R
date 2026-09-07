@@ -122,14 +122,37 @@ data_cleaned_e <- smq_e |>
 smoker_d <- filter(data_cleaned_d, SMQ040 == "Every day")
 non_smoker_d <- filter(data_cleaned_d, SMQ040 == "Not at all")
 
+# t-test
+
 mean(smoker_d$BPXSY1)
 mean(non_smoker_d$BPXSY1)
 
-# t-test
-
-t.test(smoker_d$BPXSY1, non_smoker_d$BPXSY1)
+t.test(smoker_d$BPXSY1, non_smoker_d$BPXSY1, alternative = "t")
 
 # significant result that smoker have lower sys bp
+
+mean(smoker_d$RIDAGEEX) / 12
+mean(non_smoker_d$RIDAGEEX) / 12
+
+hist(smoker_d$RIDAGEEX / 12) 
+hist(non_smoker_d$RIDAGEEX / 12)
+
+# age distribution of smokers not identical (TODO: check mortality: much more old non-smokers)
+
+# compare smokers and non-smokers at age 70-75
+
+smoker_d_old <- filter(smoker_d, RIDAGEEX >= 70*12 & RIDAGEEX < 75*12)
+non_smoker_d_old <- filter(non_smoker_d, RIDAGEEX >= 70*12 & RIDAGEEX < 75*12)
+
+mean(smoker_d_old$BPXSY1)
+mean(non_smoker_d_old$BPXSY1)
+
+t.test(smoker_d_old$BPXSY1, non_smoker_d_old$BPXSY1)
+
+# result not significant ! (TODO: check power of test, required sample size -> resize age subset) 
+
+
+
 
 # ToDo: confounding factors: age, definition of non smokers (e.g. smoked previously), bmi, antihypertensiva
 
